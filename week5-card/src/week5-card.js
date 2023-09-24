@@ -1,78 +1,94 @@
 import { LitElement, html, css } from 'lit';
 
-const logo = new URL('../assets/open-wc-logo.svg', import.meta.url).href;
-
 class Week5Card extends LitElement {
-  static properties = {
-    header: { type: String },
-  }
-
   static styles = css`
     :host {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      font-size: calc(10px + 2vmin);
-      color: #1a2b42;
-      max-width: 960px;
-      margin: 0 auto;
+      width: 350px;
+      margin: 10px;
+      padding: 15px;
+      border: 3px solid black;
+      display: block;
+    }
+
+    img {
+      width: 100%;
+    }
+
+    h2 {
       text-align: center;
-      background-color: var(--week5-card-background-color);
     }
 
-    main {
-      flex-grow: 1;
+    p {
+      text-align: center;
     }
 
-    .logo {
-      margin-top: 36px;
-      animation: app-logo-spin infinite 20s linear;
+    .details-button {
+      text-decoration: none;
+      background-color: #007BFF;
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 4px;
     }
 
-    @keyframes app-logo-spin {
-      from {
-        transform: rotate(0deg);
+    .card.toggled-color {
+      background-color: grey;
+    }
+
+    .details-toggle {
+      display: none;
+    }
+
+    .details-label {
+      cursor: pointer;
+      background-color: #007BFF;
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 4px;
+    }
+
+    .description p {
+      display: none;
+    }
+
+    .details-toggle:checked + .description p {
+      display: block;
+    }
+
+    @media (max-width: 800px) and (min-width: 500px) {
+      .details-button {
+        display: inline-block;
       }
-      to {
-        transform: rotate(360deg);
+    }
+
+    @media (max-width: 500px) {
+      :host {
+        max-width: 300px;
       }
     }
 
-    .app-footer {
-      font-size: calc(12px + 0.5vmin);
-      align-items: center;
-    }
-
-    .app-footer a {
-      margin-left: 5px;
+    @media screen and (max-width: 800px) {
+      .details-button {
+        display: none;
+      }
     }
   `;
 
-  constructor() {
-    super();
-    this.header = 'My app';
-  }
-
   render() {
     return html`
-      <main>
-        <div class="logo"><img alt="open-wc logo" src=${logo} /></div>
-        <h1>${this.header}</h1>
-
-        <p>Edit <code>src/Week5Card.js</code> and save to reload.</p>
-        <a
-          class="app-link"
-          href="https://open-wc.org/guides/developing-components/code-examples/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Code examples
-        </a>
-      </main>
-
-      
+      <h2>Lewis Hamilton</h2>
+      <img src="https://a.espncdn.com/i/headshots/rpm/players/full/868.png" alt="Image Description">
+      <input type="checkbox" id="details-toggle" class="details-toggle">
+      <div class="description">
+        <label for="details-toggle" class="details-label">Details</label>
+        <p>
+          Lewis Hamilton is a British racing legend, renowned for his exceptional skills in Formula 1.
+          With numerous world championships to his name, he's a trailblazer both on and off the track.
+        </p>
+      </div>
+      <button id="duplicateButton" class="details-button">Duplicate Card</button>
+      <button id="toggleColorButton" class="details-button">Toggle Color</button>
+      <button id="changeTextButton" class="details-button">Change Text</button>
+      <button id="deleteCardButton" class="details-button">Delete Card</button>
     `;
   }
 }
