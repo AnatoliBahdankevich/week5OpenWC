@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="Description" content="Put your description here.">
+  <base href="/">
+
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+      background-color: #ededed;
+    }
+  </style>
+  <title>week5-card</title>
+</head>
+
+<body>
+  <div class="buttons">
+    <button id="duplicateButton" class="details-button">Duplicate Card</button>
+    <button id="toggleColorButton" class="details-button">Toggle Color</button>
+    <button id="changeTextButton" class="details-button">Change Text</button>
+    <button id="deleteCardButton" class="details-button">Delete Card</button>
+  </div>
+  <week5-card></week5-card>
+  <script type="module">
+    import './src/week5-card.js';
+
+    const duplicateButton = document.getElementById("duplicateButton");
+    const toggleColorButton = document.getElementById("toggleColorButton");
+    const changeTextButton = document.getElementById("changeTextButton");
+    const deleteCardButton = document.getElementById("deleteCardButton");
+
+    duplicateButton.addEventListener("click", () => {
+      const week5Card = document.querySelector('week5-card');
+      const clonedCard = week5Card.cloneNode(true);
+      week5Card.parentNode.insertBefore(clonedCard, week5Card.nextSibling);
+    });
+
+    toggleColorButton.addEventListener("click", () => {
+      const week5Card = document.querySelector('week5-card');
+      week5Card.toggleColor();
+    });
+
+    changeTextButton.addEventListener("click", () => {
+      const week5Card = document.querySelector('week5-card');
+      week5Card.changeText();
+    });
+
+    deleteCardButton.addEventListener("click", () => {
+      const week5Card = document.querySelector('week5-card');
+      week5Card.deleteCard();
+    });
+  </script>
+</body>
+</html>

@@ -85,11 +85,22 @@ class Week5Card extends LitElement {
           With numerous world championships to his name, he's a trailblazer both on and off the track.
         </p>
       </div>
-      <button id="duplicateButton" class="details-button">Duplicate Card</button>
-      <button id="toggleColorButton" class="details-button">Toggle Color</button>
-      <button id="changeTextButton" class="details-button">Change Text</button>
-      <button id="deleteCardButton" class="details-button">Delete Card</button>
     `;
+  }
+
+  toggleColor() {
+    this.shadowRoot.querySelector('.card').classList.toggle('toggled-color');
+  }
+
+  changeText() {
+    this.shadowRoot.querySelector('h2').textContent = 'Ohio State';
+  }
+
+  deleteCard() {
+    const parent = this.parentNode;
+    if (parent) {
+      parent.removeChild(this);
+    }
   }
 }
 
