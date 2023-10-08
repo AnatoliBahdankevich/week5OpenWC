@@ -15,6 +15,55 @@
       font-family: sans-serif;
       background-color: #ededed;
     }
+    .details-button {
+      text-decoration: none;
+      background-color: #007BFF;
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 4px;
+    }
+
+    .card.toggled-color {
+      background-color: grey;
+    }
+
+    .details-toggle {
+      display: none;
+    }
+
+    .details-label {
+      cursor: pointer;
+      background-color: #007BFF;
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 4px;
+    }
+
+    .description p {
+      display: none;
+    }
+
+    .details-toggle:checked + .description p {
+      display: block;
+    }
+
+    @media (max-width: 800px) and (min-width: 500px) {
+      .details-button {
+        display: inline-block;
+      }
+    }
+
+    @media (max-width: 500px) {
+      :host {
+        max-width: 300px;
+      }
+    }
+
+    @media screen and (max-width: 800px) {
+      .details-button {
+        display: none;
+      }
+    }
   </style>
   <title>week5-card</title>
 </head>
@@ -26,35 +75,49 @@
     <button id="changeTextButton" class="details-button">Change Text</button>
     <button id="deleteCardButton" class="details-button">Delete Card</button>
   </div>
-  <week5-card></week5-card>
-  <script type="module">
-    import './src/week5-card.js';
 
-    const duplicateButton = document.getElementById("duplicateButton");
-    const toggleColorButton = document.getElementById("toggleColorButton");
-    const changeTextButton = document.getElementById("changeTextButton");
-    const deleteCardButton = document.getElementById("deleteCardButton");
+  <div id="app">
+    <week5-card></week5-card>
+</div>
 
-    duplicateButton.addEventListener("click", () => {
-      const week5Card = document.querySelector('week5-card');
-      const clonedCard = week5Card.cloneNode(true);
-      week5Card.parentNode.insertBefore(clonedCard, week5Card.nextSibling);
-    });
+<script type="module" src="./src/week5-card.js"></script>
+<script>
+      // duplicate card
+      const duplicateButton = document.querySelector('#duplicateButton')
 
-    toggleColorButton.addEventListener("click", () => {
-      const week5Card = document.querySelector('week5-card');
-      week5Card.toggleColor();
-    });
+duplicateButton.addEventListener('click', () => {
+    const card = document.querySelector('week5-card');
+    card.insertAdjacentElement('afterend', card.cloneNode());
+});
 
-    changeTextButton.addEventListener("click", () => {
-      const week5Card = document.querySelector('week5-card');
-      week5Card.changeText();
-    });
+// Delete Card
+const deleteButton = document.querySelector('#deleteCardButton')
 
-    deleteCardButton.addEventListener("click", () => {
-      const week5Card = document.querySelector('week5-card');
-      week5Card.deleteCard();
-    });
-  </script>
+deleteButton.addEventListener('click', function() {
+    const allCardClones = document.querySelectorAll('week5-card');
+    if (allCardClones.length > 1) {
+      allCardClones[allCardClones.length - 1].remove();
+    }
+});
+
+// Toggle background color
+const backgroundButton = document.querySelector('#toggleColorButton')
+
+backgroundButton.addEventListener('click', function() {
+    const card = document.querySelector('week5-card');
+    card.variation = !card.variation;
+});
+
+// Change name
+const nameBtn = document.querySelector('#changeTextButton');
+
+nameBtn.addEventListener('click', function() {
+  let name = prompt("Change name:");
+
+  if(name) {
+    document.querySelector('week5-card').name = name;
+  }
+}); 
+</script>
 </body>
 </html>

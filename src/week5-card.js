@@ -1,6 +1,23 @@
 import { LitElement, html, css } from 'lit';
 
-class Week5Card extends LitElement {
+const hamiltonImage = new URL('https://images.ctfassets.net/1fvlg6xqnm65/38dVtZPZ3GgHDqabOUqPDX/7d9cb3fe57de48b4fec7f2182957c59f/Lewis_Hamilton_Header.png', import.meta.url).href;
+
+export class Week5Card extends LitElement {
+  static get properties() {
+    return {
+      name: {
+        type: String,
+      },
+      variation: {
+        type: Boolean,
+        reflect: true,
+      },
+      information: {
+        type: String
+      }
+    }
+  }
+
   static styles = css`
     :host {
       width: 350px;
@@ -8,6 +25,9 @@ class Week5Card extends LitElement {
       padding: 15px;
       border: 3px solid black;
       display: block;
+    }
+    :host([variation]) .card {
+      background-color: #008aff;
     }
 
     img {
@@ -22,86 +42,34 @@ class Week5Card extends LitElement {
       text-align: center;
     }
 
-    .details-button {
-      text-decoration: none;
-      background-color: #007BFF;
-      color: #fff;
-      padding: 8px 16px;
-      border-radius: 4px;
-    }
-
-    .card.toggled-color {
-      background-color: grey;
-    }
-
-    .details-toggle {
-      display: none;
-    }
-
-    .details-label {
-      cursor: pointer;
-      background-color: #007BFF;
-      color: #fff;
-      padding: 8px 16px;
-      border-radius: 4px;
-    }
-
-    .description p {
-      display: none;
-    }
-
-    .details-toggle:checked + .description p {
-      display: block;
-    }
-
-    @media (max-width: 800px) and (min-width: 500px) {
-      .details-button {
-        display: inline-block;
-      }
-    }
-
-    @media (max-width: 500px) {
-      :host {
-        max-width: 300px;
-      }
-    }
-
-    @media screen and (max-width: 800px) {
-      .details-button {
-        display: none;
-      }
-    }
   `;
+  constructor() {
+    super();
+    this.name = 'Lewis Hamilton';
+    this.description = `Lewis Hamilton is a British racing legend, renowned for his exceptional skills in Formula 1.
+          With numerous world championships to his name, he's a trailblazer both on and off the track.`;
+    this.colorToggled = false;
+  }
 
   render() {
     return html`
-      <h2>Lewis Hamilton</h2>
-      <img src="https://a.espncdn.com/i/headshots/rpm/players/full/868.png" alt="Image Description">
-      <input type="checkbox" id="details-toggle" class="details-toggle">
-      <div class="description">
-        <label for="details-toggle" class="details-label">Details</label>
-        <p>
-          Lewis Hamilton is a British racing legend, renowned for his exceptional skills in Formula 1.
-          With numerous world championships to his name, he's a trailblazer both on and off the track.
-        </p>
-      </div>
+      <section class="card">
+        <div class="card-info">
+          <h2>${this.name}</h2>
+          <img src="${hamiltonImage}" alt="Lewis Hamilton">
+          <details class="details">
+            <summary>Details</summary>
+            <div class="card-details-contents">
+              ${this.description}
+              <slot></slot>
+            </div>
+          </details>
+        </div>
+      </section>
     `;
-  }
-
-  toggleColor() {
-    this.shadowRoot.querySelector('.card').classList.toggle('toggled-color');
-  }
-
-  changeText() {
-    this.shadowRoot.querySelector('h2').textContent = 'Ohio State';
-  }
-
-  deleteCard() {
-    const parent = this.parentNode;
-    if (parent) {
-      parent.removeChild(this);
-    }
   }
 }
 
+
 customElements.define('week5-card', Week5Card);
+
